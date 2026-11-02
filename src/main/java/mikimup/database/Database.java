@@ -11,7 +11,7 @@ import java.sql.*;
 
 public class Database {
 
-    static final String url = "jdbc:mysql://localhost:3306/moduladpl";
+    static final String url = "jdbc:mysql://localhost:3306/mikimup";
     static final String user = "root";
     static final String pass = "Noorafni07#"; // SUMPAH INI AKU AMBIL DARI MODULE 4 LAPRAK BUKAN AI
     static Connection conn;
