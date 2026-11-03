@@ -5,6 +5,12 @@
 package mikimup;
 
 import mikimup.database.Database;
+import mikimup.controller.ProductController;
+import mikimup.model.Product;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,6 +20,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+        ProductController controller = new ProductController();
         Database db = new Database();
         System.out.println("Coba Koneksi");
 
@@ -25,11 +32,22 @@ public class Main {
             System.out.println("yahaha gagal");
         }
 
-        System.out.println("test lainnya");
+        System.out.println("tes show read");
+        showDataMikimup(controller);
 
         db.disconnect();
 
         System.out.println("matiin koneksi");
     }
 
+    public static void showDataMikimup(ProductController controller) {
+        List<Product> daftarlist = controller.getAllProducts();
+        for (Product pro : daftarlist) {
+            System.out.println("Pro_" + pro.getIdProduct()
+                    + "| Nama Produk : " + pro.getNamaProduct()
+                    + "| Harga Produk : " + pro.getHarga()
+                    + "| Kategori : " + pro.getKategori()
+            );
+        }
+    }
 }
