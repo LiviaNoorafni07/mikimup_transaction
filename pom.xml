@@ -17,6 +17,11 @@
             <version>8.4.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE290</version>
+        </dependency>
     </dependencies>
     <name>mikimup_livia</name>
 </project>

@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+import mikimup.view.MenuMikimup;
+
 /**
  *
  * @author USER
@@ -38,6 +41,10 @@ public class Main {
         db.disconnect();
 
         System.out.println("matiin koneksi");
+
+        SwingUtilities.invokeLater(() -> {
+            new MenuMikimup().setVisible(true);
+        });
     }
 
     public static void showDataMikimup(ProductController controller) {
