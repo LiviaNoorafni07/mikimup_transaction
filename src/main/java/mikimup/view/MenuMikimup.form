@@ -31,8 +31,8 @@
               <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
                   <Component id="jLabel1" alignment="2" min="-2" pref="207" max="-2" attributes="0"/>
-                  <Component id="jButton1" alignment="2" min="-2" pref="194" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="tmbTransaksi" alignment="2" min="-2" pref="194" max="-2" attributes="0"/>
+                  <Component id="tmbKelolaProduct" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="111" max="32767" attributes="0"/>
           </Group>
@@ -44,9 +44,9 @@
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="72" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="64" max="-2" attributes="0"/>
+              <Component id="tmbTransaksi" min="-2" pref="64" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+              <Component id="tmbKelolaProduct" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="80" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -62,7 +62,7 @@
         <Property name="text" type="java.lang.String" value="Selamat Datang!"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="tmbTransaksi">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="33" red="ff" type="rgb"/>
@@ -70,13 +70,16 @@
         <Property name="text" type="java.lang.String" value="Transaksi"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="tmbKelolaProduct">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="99" green="99" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Kelola Product"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tmbKelolaProductActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

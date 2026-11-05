@@ -454,6 +454,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Buat Produk"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tmbBuatProdukActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="tmbEditProduk">
       <Properties>
@@ -469,6 +472,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Kembali"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tmbKembaliMenuActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="tmbIsiStok">
       <Properties>

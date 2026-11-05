@@ -4,11 +4,30 @@
  */
 package mikimup.view;
 
+import mikimup.database.Database;
+
+import mikimup.controller.ProductController;
+import mikimup.controller.StokController;
+
+import mikimup.model.Product;
+import mikimup.model.Stok;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author USER
  */
 public class KelolaProduct extends javax.swing.JFrame {
+
+    private ProductController Pcontroller;
+    private StokController Scontroller;
+    private DefaultTableModel tableModel;
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(KelolaProduct.class.getName());
 
@@ -17,6 +36,37 @@ public class KelolaProduct extends javax.swing.JFrame {
      */
     public KelolaProduct() {
         initComponents();
+        Pcontroller = new ProductController();
+        Scontroller = new StokController();
+        initTableProduct();
+        loadDataTableProduct();
+    }
+
+    //Load Tabel
+    private void initTableProduct() {
+        String[] kolom = {"ID", "Nama Produk", "Harga", "Kategori", "Stok", "Status"};
+        tableModel = new DefaultTableModel(kolom, 0);
+        TblProduct.setModel(tableModel);
+    }
+
+    private void loadDataTableProduct() {
+        tableModel.setRowCount(0);
+        List<Product> daftarProduct = Pcontroller.getAllProducts();
+
+        for (Product p : daftarProduct) {
+            Stok s = Scontroller.getStokByProductId(p.getIdProduct());
+            int jumlahStok = (s != null) ? s.getJumlah() : 0;
+            String statusStok = (s != null) ? s.getStatus() : "habis";
+            Object[] baris = {
+                p.getIdProduct(),
+                p.getNamaProduct(),
+                p.getHarga(),
+                p.getKategori(),
+                jumlahStok,
+                statusStok
+            };
+            tableModel.addRow(baris);
+        }
     }
 
     /**
@@ -279,12 +329,14 @@ public class KelolaProduct extends javax.swing.JFrame {
         lblKelolaProduk.setName(""); // NOI18N
 
         tmbBuatProduk.setText("Buat Produk");
+        tmbBuatProduk.addActionListener(this::tmbBuatProdukActionPerformed);
 
         tmbEditProduk.setText("Edit Product");
 
         tmbHapusProduk.setText("Hapus Product");
 
         tmbKembaliMenu.setText("Kembali");
+        tmbKembaliMenu.addActionListener(this::tmbKembaliMenuActionPerformed);
 
         tmbIsiStok.setText("Masukkan Stok Product");
 
@@ -335,6 +387,17 @@ public class KelolaProduct extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tmbBuatProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbBuatProdukActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tmbBuatProdukActionPerformed
+
+    private void tmbKembaliMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbKembaliMenuActionPerformed
+        MenuMikimup halUtama = new MenuMikimup();
+        halUtama.setLocationRelativeTo(null);
+        halUtama.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tmbKembaliMenuActionPerformed
 
     /**
      * @param args the command line arguments

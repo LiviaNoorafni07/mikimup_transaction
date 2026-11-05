@@ -29,8 +29,8 @@ public class MenuMikimup extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        tmbTransaksi = new javax.swing.JButton();
+        tmbKelolaProduct = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 204, 204));
@@ -40,11 +40,12 @@ public class MenuMikimup extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Selamat Datang!");
 
-        jButton1.setBackground(new java.awt.Color(255, 51, 51));
-        jButton1.setText("Transaksi");
+        tmbTransaksi.setBackground(new java.awt.Color(255, 51, 51));
+        tmbTransaksi.setText("Transaksi");
 
-        jButton2.setBackground(new java.awt.Color(255, 153, 153));
-        jButton2.setText("Kelola Product");
+        tmbKelolaProduct.setBackground(new java.awt.Color(255, 153, 153));
+        tmbKelolaProduct.setText("Kelola Product");
+        tmbKelolaProduct.addActionListener(this::tmbKelolaProductActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -54,8 +55,8 @@ public class MenuMikimup extends javax.swing.JFrame {
                 .addGap(95, 95, 95)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(tmbTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tmbKelolaProduct))
                 .addContainerGap(111, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -64,14 +65,21 @@ public class MenuMikimup extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tmbTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(tmbKelolaProduct)
                 .addContainerGap(80, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tmbKelolaProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbKelolaProductActionPerformed
+        KelolaProduct halProduk = new KelolaProduct();
+        halProduk.setLocationRelativeTo(null);
+        halProduk.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tmbKelolaProductActionPerformed
 
     /**
      * @param args the command line arguments
@@ -99,8 +107,8 @@ public class MenuMikimup extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton tmbKelolaProduct;
+    private javax.swing.JButton tmbTransaksi;
     // End of variables declaration//GEN-END:variables
 }
