@@ -28,15 +28,234 @@ public class KelolaProduct extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        PTambahProduk = new javax.swing.JFrame();
+        lblTambahProduct = new javax.swing.JLabel();
+        txtTambah = new javax.swing.JTextField();
+        lblnama = new javax.swing.JLabel();
+        lblharga = new javax.swing.JLabel();
+        txtHarga = new javax.swing.JTextField();
+        lblkategori = new javax.swing.JLabel();
+        cbKategori = new javax.swing.JComboBox<>();
+        lblstok = new javax.swing.JLabel();
+        txtStok = new javax.swing.JTextField();
+        tmbPTambah = new javax.swing.JButton();
+        tmbKembaliKP = new javax.swing.JButton();
+        PEditProduk = new javax.swing.JFrame();
+        lblEditProduct = new javax.swing.JLabel();
+        txtEditNama = new javax.swing.JTextField();
+        lbleditnama = new javax.swing.JLabel();
+        lbleditharga = new javax.swing.JLabel();
+        txtEditHarga = new javax.swing.JTextField();
+        lbleditkategori = new javax.swing.JLabel();
+        cbEditKategori = new javax.swing.JComboBox<>();
+        lbledit = new javax.swing.JLabel();
+        txtEditStok = new javax.swing.JTextField();
+        tmbPEdit = new javax.swing.JButton();
+        tmbKembaliKP1 = new javax.swing.JButton();
+        DHapus = new javax.swing.JDialog();
+        lblHapus = new javax.swing.JLabel();
+        btnHapus = new javax.swing.JButton();
+        tmbKembaliKP2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TblProduct = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        lblKelolaProduk = new javax.swing.JLabel();
         tmbBuatProduk = new javax.swing.JButton();
         tmbEditProduk = new javax.swing.JButton();
         tmbHapusProduk = new javax.swing.JButton();
         tmbKembaliMenu = new javax.swing.JButton();
         tmbIsiStok = new javax.swing.JButton();
         IsiStok = new javax.swing.JTextField();
+
+        lblTambahProduct.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        lblTambahProduct.setText("Tambah Produk");
+
+        lblnama.setText("Nama Produk :");
+
+        lblharga.setText("Harga Produk :");
+
+        lblkategori.setText("Kategori :");
+
+        cbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblstok.setText("Stok");
+        lblstok.setToolTipText("");
+
+        tmbPTambah.setText("Tambah Produk");
+
+        tmbKembaliKP.setText("Kembali");
+
+        javax.swing.GroupLayout PTambahProdukLayout = new javax.swing.GroupLayout(PTambahProduk.getContentPane());
+        PTambahProduk.getContentPane().setLayout(PTambahProdukLayout);
+        PTambahProdukLayout.setHorizontalGroup(
+            PTambahProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PTambahProdukLayout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addComponent(lblTambahProduct)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(PTambahProdukLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PTambahProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PTambahProdukLayout.createSequentialGroup()
+                        .addComponent(lblnama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PTambahProdukLayout.createSequentialGroup()
+                        .addGroup(PTambahProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblharga, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(lblkategori, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PTambahProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbKategori, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)))
+                    .addGroup(PTambahProdukLayout.createSequentialGroup()
+                        .addComponent(lblstok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtStok, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PTambahProdukLayout.createSequentialGroup()
+                        .addComponent(tmbKembaliKP, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tmbPTambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        PTambahProdukLayout.setVerticalGroup(
+            PTambahProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PTambahProdukLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(lblTambahProduct)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PTambahProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblnama))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PTambahProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblharga))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PTambahProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblkategori))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PTambahProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblstok))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PTambahProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tmbPTambah, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(tmbKembaliKP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        lblEditProduct.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        lblEditProduct.setText("Edit Produk");
+
+        lbleditnama.setText("Nama Produk :");
+
+        lbleditharga.setText("Harga Produk :");
+
+        lbleditkategori.setText("Kategori :");
+
+        cbEditKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lbledit.setText("Stok");
+        lbledit.setToolTipText("");
+
+        tmbPEdit.setText("Edit Produk");
+
+        tmbKembaliKP1.setText("Kembali");
+
+        javax.swing.GroupLayout PEditProdukLayout = new javax.swing.GroupLayout(PEditProduk.getContentPane());
+        PEditProduk.getContentPane().setLayout(PEditProdukLayout);
+        PEditProdukLayout.setHorizontalGroup(
+            PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PEditProdukLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PEditProdukLayout.createSequentialGroup()
+                        .addGroup(PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbleditharga, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(lbleditkategori, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbEditKategori, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtEditHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)))
+                    .addGroup(PEditProdukLayout.createSequentialGroup()
+                        .addComponent(lbledit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEditStok, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PEditProdukLayout.createSequentialGroup()
+                        .addComponent(tmbKembaliKP1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tmbPEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PEditProdukLayout.createSequentialGroup()
+                        .addComponent(lbleditnama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblEditProduct)
+                            .addComponent(txtEditNama, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
+        );
+        PEditProdukLayout.setVerticalGroup(
+            PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PEditProdukLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(lblEditProduct)
+                .addGap(18, 18, 18)
+                .addGroup(PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEditNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbleditnama))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEditHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbleditharga))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbEditKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbleditkategori))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEditStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbledit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tmbPEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(tmbKembaliKP1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        lblHapus.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
+        lblHapus.setText("Kamu Yakin Menghapus Produk ini?");
+
+        btnHapus.setText("Ya");
+
+        tmbKembaliKP2.setText("Tidak");
+
+        javax.swing.GroupLayout DHapusLayout = new javax.swing.GroupLayout(DHapus.getContentPane());
+        DHapus.getContentPane().setLayout(DHapusLayout);
+        DHapusLayout.setHorizontalGroup(
+            DHapusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DHapusLayout.createSequentialGroup()
+                .addGroup(DHapusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DHapusLayout.createSequentialGroup()
+                        .addGap(186, 186, 186)
+                        .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DHapusLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(DHapusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblHapus)
+                            .addComponent(tmbKembaliKP2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        DHapusLayout.setVerticalGroup(
+            DHapusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DHapusLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(lblHapus)
+                .addGap(18, 18, 18)
+                .addGroup(DHapusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tmbKembaliKP2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,11 +272,11 @@ public class KelolaProduct extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(TblProduct);
 
-        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Kelola Product");
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel1.setName(""); // NOI18N
+        lblKelolaProduk.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        lblKelolaProduk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblKelolaProduk.setText("Kelola Product");
+        lblKelolaProduk.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblKelolaProduk.setName(""); // NOI18N
 
         tmbBuatProduk.setText("Buat Produk");
 
@@ -76,7 +295,7 @@ public class KelolaProduct extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblKelolaProduk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tmbBuatProduk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tmbEditProduk, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                     .addComponent(tmbHapusProduk, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
@@ -97,7 +316,7 @@ public class KelolaProduct extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblKelolaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tmbBuatProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -143,14 +362,42 @@ public class KelolaProduct extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog DHapus;
     private javax.swing.JTextField IsiStok;
+    private javax.swing.JFrame PEditProduk;
+    private javax.swing.JFrame PTambahProduk;
     private javax.swing.JTable TblProduct;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnHapus;
+    private javax.swing.JComboBox<String> cbEditKategori;
+    private javax.swing.JComboBox<String> cbKategori;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEditProduct;
+    private javax.swing.JLabel lblHapus;
+    private javax.swing.JLabel lblKelolaProduk;
+    private javax.swing.JLabel lblTambahProduct;
+    private javax.swing.JLabel lbledit;
+    private javax.swing.JLabel lbleditharga;
+    private javax.swing.JLabel lbleditkategori;
+    private javax.swing.JLabel lbleditnama;
+    private javax.swing.JLabel lblharga;
+    private javax.swing.JLabel lblkategori;
+    private javax.swing.JLabel lblnama;
+    private javax.swing.JLabel lblstok;
     private javax.swing.JButton tmbBuatProduk;
     private javax.swing.JButton tmbEditProduk;
     private javax.swing.JButton tmbHapusProduk;
     private javax.swing.JButton tmbIsiStok;
+    private javax.swing.JButton tmbKembaliKP;
+    private javax.swing.JButton tmbKembaliKP1;
+    private javax.swing.JButton tmbKembaliKP2;
     private javax.swing.JButton tmbKembaliMenu;
+    private javax.swing.JButton tmbPEdit;
+    private javax.swing.JButton tmbPTambah;
+    private javax.swing.JTextField txtEditHarga;
+    private javax.swing.JTextField txtEditNama;
+    private javax.swing.JTextField txtEditStok;
+    private javax.swing.JTextField txtHarga;
+    private javax.swing.JTextField txtStok;
+    private javax.swing.JTextField txtTambah;
     // End of variables declaration//GEN-END:variables
 }
