@@ -4,6 +4,13 @@
  */
 package mikimup.view;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import mikimup.controller.TransaksiController;
+import mikimup.controller.TransaksiDetailController;
+import mikimup.model.Transaction;
+import mikimup.model.TransactionDetail;
+
 /**
  *
  * @author USER
@@ -11,12 +18,63 @@ package mikimup.view;
 public class RiwayatTransaksi extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RiwayatTransaksi.class.getName());
+    private TransaksiController transController;
+    private TransaksiDetailController detailController;
 
     /**
      * Creates new form RiwayatTransaksi
      */
     public RiwayatTransaksi() {
         initComponents();
+
+        transController = new TransaksiController();
+        detailController = new TransaksiDetailController();
+
+        loadDataTransaksi();
+    }
+
+    private void loadDataTransaksi() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID Transaksi");
+        model.addColumn("Tanggal");
+        model.addColumn("Total Harga");
+        model.addColumn("Status");
+
+        List<Transaction> listTransaksi = transController.getAllTransactions();
+        if (listTransaksi != null) {
+            for (Transaction t : listTransaksi) {
+                model.addRow(new Object[]{
+                    t.getIdTransaction(),
+                    t.getTanggal(),
+                    t.getTotalharga(),
+                    t.getStatus()
+                });
+            }
+        }
+        tblTransaksi.setModel(model);
+    }
+
+    private void loadDataDetail(int idTransaction) {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID Detail");
+        model.addColumn("ID Transaksi");
+        model.addColumn("ID Produk");
+        model.addColumn("Jumlah");
+        model.addColumn("Subtotal");
+
+        List<TransactionDetail> listDetail = detailController.getDetailByTransactionId(idTransaction);
+        if (listDetail != null) {
+            for (TransactionDetail d : listDetail) {
+                model.addRow(new Object[]{
+                    d.getIdDetail(),
+                    d.getIdTransaction(),
+                    d.getIdProduct(),
+                    d.getJumlah(),
+                    d.getSubtotal()
+                });
+            }
+        }
+        tblTransaksiDetail.setModel(model);
     }
 
     /**
@@ -50,6 +108,11 @@ public class RiwayatTransaksi extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblTransaksi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTransaksiMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblTransaksi);
 
         tblTransaksiDetail.setModel(new javax.swing.table.DefaultTableModel(
@@ -129,6 +192,17 @@ public class RiwayatTransaksi extends javax.swing.JFrame {
         halTransaksi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tmbKembaliPActionPerformed
+
+    private void tblTransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTransaksiMouseClicked
+        int selectedRow = tblTransaksi.getSelectedRow();
+        if (selectedRow != -1) {
+            Object idValue = tblTransaksi.getValueAt(selectedRow, 0);
+            if (idValue != null) {
+                int idTransaction = Integer.parseInt(idValue.toString());
+                loadDataDetail(idTransaction); // Memanggil detail transaksi
+            }
+        }
+    }//GEN-LAST:event_tblTransaksiMouseClicked
 
     /**
      * @param args the command line arguments

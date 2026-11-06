@@ -7,10 +7,12 @@ package mikimup.controller;
 import mikimup.database.Database;
 import mikimup.model.Transaction;
 import mikimup.model.TransactionDetail;
-
+import mikimup.database.Database;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -18,24 +20,33 @@ import java.util.List;
  */
 public class TransaksiDetailController {
 
+    private Database db;
+
+    public TransaksiDetailController() {
+        this.db = new Database();
+    }
+
     public List<TransactionDetail> getDetailByTransactionId(int idTransaction) {
         List<TransactionDetail> list = new ArrayList<>();
-        String sql = "SELECT * FROM transaction_detail WHERE id_transaction = ?";
-        try (Connection conn = Database.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, idTransaction);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                TransactionDetail td = new TransactionDetail(
-                        rs.getInt("id_detail"),
-                        rs.getInt("id_transaction"),
-                        rs.getInt("id_product"),
-                        rs.getInt("jumlah"),
-                        rs.getDouble("subtotal")
-                );
-                list.add(td);
+        db.connect();
+        ResultSet rs = db.view("SELECT * FROM transaction_detail WHERE id_transaction = " + idTransaction);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    TransactionDetail td = new TransactionDetail(
+                            rs.getInt("id_detail"),
+                            rs.getInt("id_transaction"),
+                            rs.getInt("id_product"),
+                            rs.getInt("jumlah"),
+                            rs.getDouble("subtotal")
+                    );
+                    list.add(td);
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Yah ada error dalam ambil Data: " + e.getMessage());
+        } finally {
+            db.disconnect();
         }
         return list;
     }
