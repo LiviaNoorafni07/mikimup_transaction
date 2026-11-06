@@ -17,8 +17,17 @@ public class TransactionDetail {
     private int jumlah;
     private double subtotal;
 
+    public TransactionDetail() {
+    }
+
+    public TransactionDetail(int idProduct, int jumlah, double subtotal) {
+        this.idProduct = idProduct;
+        this.jumlah = jumlah;
+        this.subtotal = subtotal;
+    }
+
     //Construct Product READ
-    public TransactionDetail(int idTransaction, int idDetail, int idProduct, String namaProduct, int jumlah, double subtotal) {
+    public TransactionDetail(int idTransaction, int idDetail, int idProduct, int jumlah, double subtotal) {
         this.idTransaction = idTransaction;
         this.idDetail = idDetail;
         this.idProduct = idProduct;
@@ -50,5 +59,25 @@ public class TransactionDetail {
 
     public int getJumlah() {
         return jumlah;
+    }
+
+    public void setIdDetail(int idDetail) {
+        this.idDetail = idDetail;
+    }
+
+    public void setIdTransaction(int idTransaction) {
+        this.idTransaction = idTransaction;
+    }
+
+    public void setIdProduct(int idProduct) {
+        this.idProduct = idProduct;
+    }
+
+    public void setJumlah(int jumlah) {
+        this.jumlah = jumlah;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
     }
 }

@@ -5,6 +5,8 @@
 package mikimup.model;
 
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,9 +18,13 @@ public class Transaction {
     private Date tanggal;
     private double totalharga;
     private String status;
+    private List<TransactionDetail> details = new ArrayList();
+
+    public Transaction() {
+    }
 
     //Construct Product READ
-    public Transaction(int idTransaction, Date tanggal, double totalharga, int minimum, String status) {
+    public Transaction(int idTransaction, Date tanggal, double totalharga, String status) {
         this.idTransaction = idTransaction;
         this.tanggal = tanggal;
         this.totalharga = totalharga;

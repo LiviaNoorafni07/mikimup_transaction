@@ -27,6 +27,10 @@ public class Database {
         }
     }
 
+    public static Connection getConnection() {
+        return conn;
+    }
+
     public void query(String sql) {
         try {
             stmt.executeUpdate(sql);
