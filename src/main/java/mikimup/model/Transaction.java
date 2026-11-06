@@ -47,4 +47,36 @@ public class Transaction {
     public String getStatus() {
         return status;
     }
+
+    public void setTanggal(Date tanggal) {
+        this.tanggal = tanggal;
+    }
+
+    public void setIdTransaction(int idTransaction) {
+        this.idTransaction = idTransaction;
+    }
+
+    public void getStatus(String status) {
+        this.status = status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<TransactionDetail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<TransactionDetail> details) {
+        this.details = details;
+    }
+
+    public void addDetail(TransactionDetail detail) {
+        this.details.add(detail);
+    }
+
+    public void setTotalharga(double totalharga) {
+        this.totalharga = totalharga;
+    }
 }

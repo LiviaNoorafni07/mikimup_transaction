@@ -51,4 +51,53 @@ public class TransaksiController {
 
         return list;
     }
+
+    public boolean simpanTransaksi(Transaction transaction) {
+        db.connect();
+        Connection conn = db.getConnection();
+        if (conn == null) {
+            System.out.println("Yah gagal nyambung database");
+            return false;
+        }
+        String sqlTransPay = "INSERT INTO transaction (total_harga, status) Values (?, ?)";
+        String sqlTransDetail = "INSERT INTO transaction_detail (id_transaction, id_product, jumlah, subtotal) VALUES (?, ?, ?, ?)";
+        String sqlUpdateStok = "UPDATE stok SET jumlah = ?, status = ? WHERE id_product = ?";
+
+        try {
+            PreparedStatement psTx = conn.prepareStatement(sqlTransPay, Statement.RETURN_GENERATED_KEYS);
+            psTx.setDouble(1, transaction.getTotalharga());
+            psTx.setString(2, "selesai");
+            psTx.executeUpdate();
+
+            // Ambil ID nota transaksi baru dibuat
+            ResultSet rsKey = psTx.getGeneratedKeys();
+            int idTx = -1;
+            if (rsKey.next()) {
+                idTx = rsKey.getInt(1);
+            }
+            for (TransactionDetail item : transaction.getDetails()) {
+                // 1. Simpan ke transaction_detail
+                PreparedStatement psDetail = conn.prepareStatement(sqlTransDetail);
+                psDetail.setInt(1, idTx);
+                psDetail.setInt(2, item.getIdProduct());
+                psDetail.setInt(3, item.getJumlah());
+                psDetail.setDouble(4, item.getSubtotal());
+                psDetail.executeUpdate();
+
+                // 2. Potong stok langsung di MySQL
+                PreparedStatement psStok = conn.prepareStatement(sqlUpdateStok);
+                psStok.setInt(1, item.getJumlah());
+                psStok.setInt(2, item.getJumlah());
+                psStok.setInt(3, item.getIdProduct());
+                psStok.executeUpdate();
+            }
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error simpan transaksi: " + e.getMessage());
+            return false;
+        } finally {
+            db.disconnect();
+        }
+    }
 }

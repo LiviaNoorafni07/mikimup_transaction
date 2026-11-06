@@ -4,6 +4,15 @@
  */
 package mikimup.view;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import mikimup.controller.ProductController;
+import mikimup.controller.TransaksiController;
+import mikimup.model.Product;
+import mikimup.model.Transaction;
+import mikimup.model.TransactionDetail;
+
 /**
  *
  * @author USER
@@ -11,12 +20,184 @@ package mikimup.view;
 public class TransaksiMenu extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TransaksiMenu.class.getName());
+    private ProductController productController;
+    private TransaksiController transaksiController;
+    private DefaultTableModel modelSementara;
+    private List<Product> listProduk;
 
     /**
      * Creates new form TransaksiMenu
      */
     public TransaksiMenu() {
         initComponents();
+        txtId.setEditable(false);
+        txtHarga.setEditable(false);
+        txtTotalHarga.setEditable(false);
+        txtKembalian.setEditable(false);
+
+        productController = new ProductController();
+        transaksiController = new TransaksiController();
+
+        setupTabelSementara();
+        loadComboProduk();
+
+        initListeners();
+    }
+
+    private void setupTabelSementara() {
+        modelSementara = new DefaultTableModel();
+        modelSementara.addColumn("ID Produk");
+        modelSementara.addColumn("Nama Produk");
+        modelSementara.addColumn("Harga");
+        modelSementara.addColumn("Jumlah");
+        modelSementara.addColumn("Subtotal");
+        tblTransaksiSementara.setModel(modelSementara);
+    }
+
+    private void loadComboProduk() {
+        cbNamaProduk.removeAllItems();
+        listProduk = productController.getAllProducts();
+        if (listProduk != null && !listProduk.isEmpty()) {
+            for (Product p : listProduk) {
+                cbNamaProduk.addItem(p.getNamaProduct());
+            }
+            updateDetailProdukSelected();
+        }
+    }
+
+    private void updateDetailProdukSelected() {
+        int selectedIndex = cbNamaProduk.getSelectedIndex();
+        if (selectedIndex != -1 && listProduk != null && selectedIndex < listProduk.size()) {
+            Product p = listProduk.get(selectedIndex);
+            txtId.setText(String.valueOf(p.getIdProduct()));
+            txtHarga.setText(String.valueOf(p.getHarga()));
+        }
+    }
+
+    private void initListeners() {
+        cbNamaProduk.addActionListener(e -> updateDetailProdukSelected());
+        tmbTambah.addActionListener(e -> tambahKeKeranjang());
+        tmbEdit.addActionListener(e -> editKeranjang());
+        tmbHapus.addActionListener(e -> hapusDariKeranjang());
+        tmbTransaksi.addActionListener(e -> prosesTransaksiAkhir());
+
+        tblTransaksiSementara.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pilihBarisKeranjang();
+            }
+        });
+
+        txtHarga1.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                hitungKembalian();
+            }
+        });
+    }
+
+    private void tambahKeKeranjang() {
+        if (txtId.getText().isEmpty() || txtJumlah.getText().trim().isEmpty()) {
+            return;
+        }
+        try {
+            int idProduct = Integer.parseInt(txtId.getText());
+            String nama = cbNamaProduk.getSelectedItem().toString();
+            double harga = Double.parseDouble(txtHarga.getText());
+            int jumlah = Integer.parseInt(txtJumlah.getText().trim());
+            double subtotal = harga * jumlah;
+
+            modelSementara.addRow(new Object[]{idProduct, nama, harga, jumlah, subtotal});
+            txtJumlah.setText("");
+            hitungTotalSemuaHarga();
+        } catch (Exception e) {
+        }
+    }
+
+    private void editKeranjang() {
+        int row = tblTransaksiSementara.getSelectedRow();
+        if (row == -1) {
+            return;
+        }
+        try {
+            int jumlahBaru = Integer.parseInt(txtJumlah.getText().trim());
+            double harga = Double.parseDouble(modelSementara.getValueAt(row, 2).toString());
+            modelSementara.setValueAt(jumlahBaru, row, 3);
+            modelSementara.setValueAt(harga * jumlahBaru, row, 4);
+            txtJumlah.setText("");
+            hitungTotalSemuaHarga();
+        } catch (Exception e) {
+        }
+    }
+
+    private void hapusDariKeranjang() {
+        int row = tblTransaksiSementara.getSelectedRow();
+        if (row != -1) {
+            modelSementara.removeRow(row);
+            hitungTotalSemuaHarga();
+        }
+    }
+
+    private void pilihBarisKeranjang() {
+        int row = tblTransaksiSementara.getSelectedRow();
+        if (row != -1) {
+            txtId.setText(modelSementara.getValueAt(row, 0).toString());
+            cbNamaProduk.setSelectedItem(modelSementara.getValueAt(row, 1).toString());
+            txtHarga.setText(modelSementara.getValueAt(row, 2).toString());
+            txtJumlah.setText(modelSementara.getValueAt(row, 3).toString());
+        }
+    }
+
+    private void hitungTotalSemuaHarga() {
+        double total = 0;
+        for (int i = 0; i < modelSementara.getRowCount(); i++) {
+            total += Double.parseDouble(modelSementara.getValueAt(i, 4).toString());
+        }
+        txtTotalHarga.setText(String.valueOf(total));
+        hitungKembalian();
+    }
+
+    private void hitungKembalian() {
+        try {
+            double total = txtTotalHarga.getText().isEmpty() ? 0 : Double.parseDouble(txtTotalHarga.getText());
+            double bayar = txtHarga1.getText().isEmpty() ? 0 : Double.parseDouble(txtHarga1.getText());
+            txtKembalian.setText(String.valueOf(bayar - total));
+        } catch (Exception e) {
+            txtKembalian.setText("0.0");
+        }
+    }
+
+// E. Proses Simpan Transaksi Ke Database
+    private void prosesTransaksiAkhir() {
+        if (modelSementara.getRowCount() == 0) {
+            return;
+        }
+        double total = Double.parseDouble(txtTotalHarga.getText());
+        double bayar = Double.parseDouble(txtHarga1.getText().trim());
+
+        if (bayar < total) {
+            return;
+        }
+
+        Transaction t = new Transaction();
+        t.setTotalharga(total);
+        t.setStatus("selesai");
+
+        for (int i = 0; i < modelSementara.getRowCount(); i++) {
+            int idProduct = Integer.parseInt(modelSementara.getValueAt(i, 0).toString());
+            int jumlah = Integer.parseInt(modelSementara.getValueAt(i, 3).toString());
+            double subtotal = Double.parseDouble(modelSementara.getValueAt(i, 4).toString());
+            t.addDetail(new TransactionDetail(idProduct, jumlah, subtotal));
+        }
+
+        if (transaksiController.simpanTransaksi(t)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Transaksi Berhasil!");
+            modelSementara.setRowCount(0);
+            txtJumlah.setText("");
+            txtTotalHarga.setText("");
+            txtHarga1.setText("");
+            txtKembalian.setText("");
+        }
     }
 
     /**
@@ -49,6 +230,7 @@ public class TransaksiMenu extends javax.swing.JFrame {
         lblBayar = new javax.swing.JLabel();
         lblKembalian = new javax.swing.JLabel();
         txtKembalian = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +256,7 @@ public class TransaksiMenu extends javax.swing.JFrame {
         tmbTambah.setText("Tambah Transaksi");
 
         cbNamaProduk.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbNamaProduk.addActionListener(this::cbNamaProdukActionPerformed);
 
         tmbEdit.setText("Edit");
 
@@ -113,7 +296,10 @@ public class TransaksiMenu extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(lblNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cbNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(2, 2, 2))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(lblJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -154,22 +340,11 @@ public class TransaksiMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tmbkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(RiwayatTransakstmbi, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tmbkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTotalSemuaHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,7 +355,20 @@ public class TransaksiMenu extends javax.swing.JFrame {
                             .addComponent(txtHarga1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtId))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tmbTambah, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
@@ -208,6 +396,10 @@ public class TransaksiMenu extends javax.swing.JFrame {
         halUtama.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tmbkembaliActionPerformed
+
+    private void cbNamaProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNamaProdukActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbNamaProdukActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,6 +445,7 @@ public class TransaksiMenu extends javax.swing.JFrame {
     private javax.swing.JButton tmbkembali;
     private javax.swing.JTextField txtHarga;
     private javax.swing.JTextField txtHarga1;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtJumlah;
     private javax.swing.JTextField txtKembalian;
     private javax.swing.JTextField txtTotalHarga;

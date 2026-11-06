@@ -13,7 +13,6 @@ public class TransactionDetail {
     private int idTransaction;
     private int idDetail;
     private int idProduct;
-    private String namaProduct;
     private int jumlah;
     private double subtotal;
 
@@ -27,11 +26,10 @@ public class TransactionDetail {
     }
 
     //Construct Product READ
-    public TransactionDetail(int idTransaction, int idDetail, int idProduct, int jumlah, double subtotal) {
-        this.idTransaction = idTransaction;
+    public TransactionDetail(int idDetail, int idTransaction, int idProduct, int jumlah, double subtotal) {
         this.idDetail = idDetail;
+        this.idTransaction = idTransaction;
         this.idProduct = idProduct;
-        this.namaProduct = namaProduct;
         this.jumlah = jumlah;
         this.subtotal = subtotal;
     }
@@ -51,10 +49,6 @@ public class TransactionDetail {
 
     public double getSubtotal() {
         return subtotal;
-    }
-
-    public String getNamaProduct() {
-        return namaProduct;
     }
 
     public int getJumlah() {
