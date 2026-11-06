@@ -28,13 +28,6 @@ public class TransaksiMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JRiwayatTransaksi = new javax.swing.JFrame();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblTransaksi = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblTransaksiDetail = new javax.swing.JTable();
-        lblRiwayatTransaksi = new javax.swing.JLabel();
-        tmbKembaliP = new javax.swing.JButton();
         lblTransaksi = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTransaksiSementara = new javax.swing.JTable();
@@ -52,70 +45,6 @@ public class TransaksiMenu extends javax.swing.JFrame {
         tmbTransaksi = new javax.swing.JButton();
         RiwayatTransakstmbi = new javax.swing.JButton();
         tmbkembali = new javax.swing.JButton();
-
-        tblTransaksi.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(tblTransaksi);
-
-        tblTransaksiDetail.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(tblTransaksiDetail);
-
-        lblRiwayatTransaksi.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
-        lblRiwayatTransaksi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblRiwayatTransaksi.setText("Riwayat Transaksi");
-
-        tmbKembaliP.setText("Kembali");
-
-        javax.swing.GroupLayout JRiwayatTransaksiLayout = new javax.swing.GroupLayout(JRiwayatTransaksi.getContentPane());
-        JRiwayatTransaksi.getContentPane().setLayout(JRiwayatTransaksiLayout);
-        JRiwayatTransaksiLayout.setHorizontalGroup(
-            JRiwayatTransaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(JRiwayatTransaksiLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(JRiwayatTransaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tmbKembaliP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(JRiwayatTransaksiLayout.createSequentialGroup()
-                        .addGroup(JRiwayatTransaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(lblRiwayatTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        JRiwayatTransaksiLayout.setVerticalGroup(
-            JRiwayatTransaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JRiwayatTransaksiLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(JRiwayatTransaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(JRiwayatTransaksiLayout.createSequentialGroup()
-                        .addComponent(lblRiwayatTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tmbKembaliP, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -156,8 +85,10 @@ public class TransaksiMenu extends javax.swing.JFrame {
         tmbTransaksi.setText("Transaksi");
 
         RiwayatTransakstmbi.setText("Riwayat Transaksi");
+        RiwayatTransakstmbi.addActionListener(this::RiwayatTransakstmbiActionPerformed);
 
         tmbkembali.setText("kembali");
+        tmbkembali.addActionListener(this::tmbkembaliActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -216,10 +147,11 @@ public class TransaksiMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTotalHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTotalHarga, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -244,6 +176,20 @@ public class TransaksiMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void RiwayatTransakstmbiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RiwayatTransakstmbiActionPerformed
+        RiwayatTransaksi halHistoryPay = new RiwayatTransaksi();
+        halHistoryPay.setLocationRelativeTo(null);
+        halHistoryPay.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_RiwayatTransakstmbiActionPerformed
+
+    private void tmbkembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbkembaliActionPerformed
+        MenuMikimup halUtama = new MenuMikimup();
+        halUtama.setLocationRelativeTo(null);
+        halUtama.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tmbkembaliActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,24 +217,17 @@ public class TransaksiMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFrame JRiwayatTransaksi;
     private javax.swing.JButton RiwayatTransakstmbi;
     private javax.swing.JComboBox<String> cbNamaProduk;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblHarga;
     private javax.swing.JLabel lblJumlah;
     private javax.swing.JLabel lblNamaProduk;
-    private javax.swing.JLabel lblRiwayatTransaksi;
     private javax.swing.JLabel lblTotalSemuaHarga;
     private javax.swing.JLabel lblTransaksi;
-    private javax.swing.JTable tblTransaksi;
-    private javax.swing.JTable tblTransaksiDetail;
     private javax.swing.JTable tblTransaksiSementara;
     private javax.swing.JButton tmbEdit;
     private javax.swing.JButton tmbHapus;
-    private javax.swing.JButton tmbKembaliP;
     private javax.swing.JButton tmbTambah;
     private javax.swing.JButton tmbTransaksi;
     private javax.swing.JButton tmbkembali;

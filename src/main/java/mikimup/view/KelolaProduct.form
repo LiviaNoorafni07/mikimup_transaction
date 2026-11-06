@@ -37,7 +37,7 @@
                           <Component id="txtStok" min="-2" pref="184" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="tmbKembaliKP" min="-2" pref="125" max="-2" attributes="0"/>
+                          <Component id="tmbClear1" min="-2" pref="125" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="tmbPTambah" max="32767" attributes="0"/>
                       </Group>
@@ -74,7 +74,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="tmbPTambah" pref="36" max="32767" attributes="0"/>
-                      <Component id="tmbKembaliKP" max="32767" attributes="0"/>
+                      <Component id="tmbClear1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -137,9 +137,9 @@
             <Property name="text" type="java.lang.String" value="Tambah Produk"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="tmbKembaliKP">
+        <Component class="javax.swing.JButton" name="tmbClear1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Kembali"/>
+            <Property name="text" type="java.lang.String" value="Clear"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -169,7 +169,7 @@
                           <Component id="txtEditStok" min="-2" pref="184" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="tmbKembaliKP1" min="-2" pref="125" max="-2" attributes="0"/>
+                          <Component id="tmbClear2" min="-2" pref="125" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="tmbPEdit" max="32767" attributes="0"/>
                       </Group>
@@ -214,7 +214,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="tmbPEdit" alignment="0" pref="36" max="32767" attributes="0"/>
-                      <Component id="tmbKembaliKP1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="tmbClear2" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -277,9 +277,9 @@
             <Property name="text" type="java.lang.String" value="Edit Produk"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="tmbKembaliKP1">
+        <Component class="javax.swing.JButton" name="tmbClear2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Kembali"/>
+            <Property name="text" type="java.lang.String" value="Clear"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -462,6 +462,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Edit Product"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tmbEditProdukActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="tmbHapusProduk">
       <Properties>

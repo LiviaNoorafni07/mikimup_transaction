@@ -31,6 +31,7 @@ public class MenuMikimup extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         tmbTransaksi = new javax.swing.JButton();
         tmbKelolaProduct = new javax.swing.JButton();
+        tmbKelolaProduct1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 204, 204));
@@ -42,10 +43,15 @@ public class MenuMikimup extends javax.swing.JFrame {
 
         tmbTransaksi.setBackground(new java.awt.Color(255, 51, 51));
         tmbTransaksi.setText("Transaksi");
+        tmbTransaksi.addActionListener(this::tmbTransaksiActionPerformed);
 
         tmbKelolaProduct.setBackground(new java.awt.Color(255, 153, 153));
         tmbKelolaProduct.setText("Kelola Product");
         tmbKelolaProduct.addActionListener(this::tmbKelolaProductActionPerformed);
+
+        tmbKelolaProduct1.setBackground(new java.awt.Color(255, 153, 153));
+        tmbKelolaProduct1.setText("Riwayat Transaksi");
+        tmbKelolaProduct1.addActionListener(this::tmbKelolaProduct1ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -56,7 +62,8 @@ public class MenuMikimup extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tmbTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tmbKelolaProduct))
+                    .addComponent(tmbKelolaProduct)
+                    .addComponent(tmbKelolaProduct1))
                 .addContainerGap(111, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -66,9 +73,11 @@ public class MenuMikimup extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tmbTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(tmbKelolaProduct)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tmbKelolaProduct1)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -80,6 +89,20 @@ public class MenuMikimup extends javax.swing.JFrame {
         halProduk.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tmbKelolaProductActionPerformed
+
+    private void tmbTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbTransaksiActionPerformed
+        TransaksiMenu halTransaksi = new TransaksiMenu();
+        halTransaksi.setLocationRelativeTo(null);
+        halTransaksi.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tmbTransaksiActionPerformed
+
+    private void tmbKelolaProduct1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbKelolaProduct1ActionPerformed
+        RiwayatTransaksi halHistoryPay = new RiwayatTransaksi();
+        halHistoryPay.setLocationRelativeTo(null);
+        halHistoryPay.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tmbKelolaProduct1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,6 +132,7 @@ public class MenuMikimup extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton tmbKelolaProduct;
+    private javax.swing.JButton tmbKelolaProduct1;
     private javax.swing.JButton tmbTransaksi;
     // End of variables declaration//GEN-END:variables
 }

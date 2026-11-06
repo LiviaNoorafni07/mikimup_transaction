@@ -89,7 +89,7 @@ public class KelolaProduct extends javax.swing.JFrame {
         lblstok = new javax.swing.JLabel();
         txtStok = new javax.swing.JTextField();
         tmbPTambah = new javax.swing.JButton();
-        tmbKembaliKP = new javax.swing.JButton();
+        tmbClear1 = new javax.swing.JButton();
         PEditProduk = new javax.swing.JFrame();
         lblEditProduct = new javax.swing.JLabel();
         txtEditNama = new javax.swing.JTextField();
@@ -101,7 +101,7 @@ public class KelolaProduct extends javax.swing.JFrame {
         lbledit = new javax.swing.JLabel();
         txtEditStok = new javax.swing.JTextField();
         tmbPEdit = new javax.swing.JButton();
-        tmbKembaliKP1 = new javax.swing.JButton();
+        tmbClear2 = new javax.swing.JButton();
         DHapus = new javax.swing.JDialog();
         lblHapus = new javax.swing.JLabel();
         btnHapus = new javax.swing.JButton();
@@ -132,7 +132,7 @@ public class KelolaProduct extends javax.swing.JFrame {
 
         tmbPTambah.setText("Tambah Produk");
 
-        tmbKembaliKP.setText("Kembali");
+        tmbClear1.setText("Clear");
 
         javax.swing.GroupLayout PTambahProdukLayout = new javax.swing.GroupLayout(PTambahProduk.getContentPane());
         PTambahProduk.getContentPane().setLayout(PTambahProdukLayout);
@@ -162,7 +162,7 @@ public class KelolaProduct extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtStok, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PTambahProdukLayout.createSequentialGroup()
-                        .addComponent(tmbKembaliKP, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tmbClear1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tmbPTambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -191,7 +191,7 @@ public class KelolaProduct extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PTambahProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tmbPTambah, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(tmbKembaliKP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tmbClear1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -211,7 +211,7 @@ public class KelolaProduct extends javax.swing.JFrame {
 
         tmbPEdit.setText("Edit Produk");
 
-        tmbKembaliKP1.setText("Kembali");
+        tmbClear2.setText("Clear");
 
         javax.swing.GroupLayout PEditProdukLayout = new javax.swing.GroupLayout(PEditProduk.getContentPane());
         PEditProduk.getContentPane().setLayout(PEditProdukLayout);
@@ -233,7 +233,7 @@ public class KelolaProduct extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtEditStok, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PEditProdukLayout.createSequentialGroup()
-                        .addComponent(tmbKembaliKP1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tmbClear2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tmbPEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PEditProdukLayout.createSequentialGroup()
@@ -268,7 +268,7 @@ public class KelolaProduct extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PEditProdukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tmbPEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(tmbKembaliKP1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tmbClear2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -332,6 +332,7 @@ public class KelolaProduct extends javax.swing.JFrame {
         tmbBuatProduk.addActionListener(this::tmbBuatProdukActionPerformed);
 
         tmbEditProduk.setText("Edit Product");
+        tmbEditProduk.addActionListener(this::tmbEditProdukActionPerformed);
 
         tmbHapusProduk.setText("Hapus Product");
 
@@ -389,7 +390,13 @@ public class KelolaProduct extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tmbBuatProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbBuatProdukActionPerformed
-        // TODO add your handling code here:
+        txtTambah.setText("");
+        txtHarga.setText("");
+        txtStok.setText("");
+
+        PTambahProduk.pack();
+        PTambahProduk.setLocationRelativeTo(this);
+        PTambahProduk.setVisible(true);
     }//GEN-LAST:event_tmbBuatProdukActionPerformed
 
     private void tmbKembaliMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbKembaliMenuActionPerformed
@@ -398,6 +405,16 @@ public class KelolaProduct extends javax.swing.JFrame {
         halUtama.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tmbKembaliMenuActionPerformed
+
+    private void tmbEditProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbEditProdukActionPerformed
+        txtEditNama.setText("");
+        txtEditHarga.setText("");
+        txtEditStok.setText("");
+
+        PEditProduk.pack();
+        PEditProduk.setLocationRelativeTo(this);
+        PEditProduk.setVisible(true);
+    }//GEN-LAST:event_tmbEditProdukActionPerformed
 
     /**
      * @param args the command line arguments
@@ -447,11 +464,11 @@ public class KelolaProduct extends javax.swing.JFrame {
     private javax.swing.JLabel lblnama;
     private javax.swing.JLabel lblstok;
     private javax.swing.JButton tmbBuatProduk;
+    private javax.swing.JButton tmbClear1;
+    private javax.swing.JButton tmbClear2;
     private javax.swing.JButton tmbEditProduk;
     private javax.swing.JButton tmbHapusProduk;
     private javax.swing.JButton tmbIsiStok;
-    private javax.swing.JButton tmbKembaliKP;
-    private javax.swing.JButton tmbKembaliKP1;
     private javax.swing.JButton tmbKembaliKP2;
     private javax.swing.JButton tmbKembaliMenu;
     private javax.swing.JButton tmbPEdit;
