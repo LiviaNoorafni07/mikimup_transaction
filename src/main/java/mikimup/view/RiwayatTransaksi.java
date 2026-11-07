@@ -20,61 +20,80 @@ public class RiwayatTransaksi extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RiwayatTransaksi.class.getName());
     private TransaksiController transController;
     private TransaksiDetailController detailController;
+    private DefaultTableModel modelTransaksi;
+    private DefaultTableModel modelDetail;
 
     /**
      * Creates new form RiwayatTransaksi
      */
     public RiwayatTransaksi() {
         initComponents();
-
         transController = new TransaksiController();
-        detailController = new TransaksiDetailController();
-
+        initTableModels();
         loadDataTransaksi();
+        setupEvents();
+    }
+
+    private void initTableModels() {
+        // Tabel Transaksi Master (Kiri)
+        String[] kolomTransaksi = {"ID Transaksi", "Tanggal", "Total Harga", "Status"};
+        modelTransaksi = new DefaultTableModel(kolomTransaksi, 0);
+        tblTransaksi.setModel(modelTransaksi); // jTable1 di jScrollPane2
+
+        // Tabel Detail Transaksi (Kanan)
+        String[] kolomDetail = {"ID Detail", "ID Produk", "Nama Produk", "Jumlah", "Subtotal"};
+        modelDetail = new DefaultTableModel(kolomDetail, 0);
+        tblTransaksiDetail.setModel(modelDetail); // jTable2 di jScrollPane3
     }
 
     private void loadDataTransaksi() {
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID Transaksi");
-        model.addColumn("Tanggal");
-        model.addColumn("Total Harga");
-        model.addColumn("Status");
-
-        List<Transaction> listTransaksi = transController.getAllTransactions();
-        if (listTransaksi != null) {
-            for (Transaction t : listTransaksi) {
-                model.addRow(new Object[]{
-                    t.getIdTransaction(),
-                    t.getTanggal(),
-                    t.getTotalharga(),
-                    t.getStatus()
-                });
-            }
+        modelTransaksi.setRowCount(0);
+        List<Transaction> list = transController.getAllTransactions();
+        for (Transaction t : list) {
+            Object[] baris = {
+                t.getIdTransaction(),
+                t.getTanggal(),
+                t.getTotalharga(),
+                t.getStatus()
+            };
+            modelTransaksi.addRow(baris);
         }
-        tblTransaksi.setModel(model);
     }
 
     private void loadDataDetail(int idTransaction) {
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID Detail");
-        model.addColumn("ID Transaksi");
-        model.addColumn("ID Produk");
-        model.addColumn("Jumlah");
-        model.addColumn("Subtotal");
-
-        List<TransactionDetail> listDetail = detailController.getDetailByTransactionId(idTransaction);
-        if (listDetail != null) {
-            for (TransactionDetail d : listDetail) {
-                model.addRow(new Object[]{
-                    d.getIdDetail(),
-                    d.getIdTransaction(),
-                    d.getIdProduct(),
-                    d.getJumlah(),
-                    d.getSubtotal()
-                });
-            }
+        modelDetail.setRowCount(0);
+        List<TransactionDetail> list = transController.getDetailByTransactionId(idTransaction);
+        for (TransactionDetail d : list) {
+            Object[] baris = {
+                d.getIdDetail(),
+                d.getIdProduct(),
+                d.getNamaProduct(),
+                d.getJumlah(),
+                d.getSubtotal()
+            };
+            modelDetail.addRow(baris);
         }
-        tblTransaksiDetail.setModel(model);
+    }
+
+    private void setupEvents() {
+        // Event Klik Baris Tabel Transaksi Kiri
+        tblTransaksi.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tblTransaksi.getSelectedRow();
+                if (selectedRow >= 0) {
+                    int idTransaction = Integer.parseInt(tblTransaksi.getValueAt(selectedRow, 0).toString());
+                    loadDataDetail(idTransaction);
+                }
+            }
+        });
+
+        // Event Tombol Kembali
+        tmbKembaliP.addActionListener(e -> {
+            MenuMikimup menu = new MenuMikimup();
+            menu.setLocationRelativeTo(null);
+            menu.setVisible(true);
+            this.dispose();
+        });
     }
 
     /**

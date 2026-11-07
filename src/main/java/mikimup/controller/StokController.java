@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -73,5 +75,40 @@ public class StokController {
             db.disconnect();
         }
         return stok;
+    }
+
+    public boolean kurangiStok(int idProduct, int jumlahBeli) {
+        Stok s = getStokByProductId(idProduct);
+        if (s == null || s.getJumlah() < jumlahBeli) {
+            return false;
+        }
+
+        int sisaStok = s.getJumlah() - jumlahBeli;
+        String statusBaru = "tersedia";
+        if (sisaStok <= 0) {
+            statusBaru = "habis";
+        } else if (sisaStok <= s.getMinimum()) {
+            statusBaru = "menipis";
+        }
+
+        db.connect();
+        Connection conn = db.getConnection();
+        if (conn != null) {
+            try {
+                String sql = "UPDATE stok SET jumlah = ?, status = ? WHERE id_product = ?";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setInt(1, sisaStok);
+                ps.setString(2, statusBaru);
+                ps.setInt(3, idProduct);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("Error kurangiStok: " + e.getMessage());
+            } finally {
+                db.disconnect();
+            }
+            return true;
+        }
+        db.disconnect();
+        return false;
     }
 }

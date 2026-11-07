@@ -31,6 +31,11 @@ public class Transaction {
         this.status = status;
     }
 
+    public Transaction(double totalharga, String status) {
+        this.totalharga = totalharga;
+        this.status = status;
+    }
+
     //Get dan setter
     public int getIdTransaction() {
         return idTransaction;

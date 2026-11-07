@@ -6,6 +6,10 @@ package mikimup.controller;
 
 import mikimup.model.Transaction;
 import mikimup.model.TransactionDetail;
+import mikimup.repository.TransactionRepository;
+import mikimup.repository.TransactionDetailRepository;
+import mikimup.repository.TransactionRepositoryImpl;
+import mikimup.repository.TransactionDetailRepositoryImpl;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,84 +24,43 @@ import mikimup.model.Product;
 public class TransaksiController {
 
     private Database db;
+    private final TransactionRepository transactionRepo;
+    private final TransactionDetailRepository detailRepo;
+    private final StokController stokController;
 
     public TransaksiController() {
-        this.db = new Database();
+        this.transactionRepo = new TransactionRepositoryImpl();
+        this.detailRepo = new TransactionDetailRepositoryImpl();
+        this.stokController = new StokController();
+    }
+
+    public TransaksiController(TransactionRepository tRepo, TransactionDetailRepository dRepo, StokController sController) {
+        this.transactionRepo = tRepo;
+        this.detailRepo = dRepo;
+        this.stokController = sController;
     }
 
     // Menampilkan tabel product (siREAD)
     public List<Transaction> getAllTransactions() {
-        List<Transaction> list = new ArrayList<>();
-        db.connect();
-        ResultSet rs = db.view("SELECT * FROM transaction ORDER BY id_transaction DESC");
+        return transactionRepo.findAll();
+    }
 
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    Transaction t = new Transaction(
-                            rs.getInt("id_transaction"),
-                            rs.getTimestamp("tanggal"),
-                            rs.getDouble("total_harga"),
-                            rs.getString("status")
-                    );
-                    list.add(t);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Yah ada error dalam ambil Data: " + e.getMessage());
-        } finally {
-            db.disconnect();
-        }
-
-        return list;
+    public List<TransactionDetail> getDetailByTransactionId(int idTransaction) {
+        return detailRepo.findByTransactionId(idTransaction);
     }
 
     public boolean simpanTransaksi(Transaction transaction) {
-        db.connect();
-        Connection conn = db.getConnection();
-        if (conn == null) {
-            System.out.println("Yah gagal nyambung database");
+        int idTx = transactionRepo.saveMaster(transaction);
+        if (idTx == -1) {
             return false;
         }
-        String sqlTransPay = "INSERT INTO transaction (total_harga, status) Values (?, ?)";
-        String sqlTransDetail = "INSERT INTO transaction_detail (id_transaction, id_product, jumlah, subtotal) VALUES (?, ?, ?, ?)";
-        String sqlUpdateStok = "UPDATE stok SET jumlah = ?, status = ? WHERE id_product = ?";
 
-        try {
-            PreparedStatement psTx = conn.prepareStatement(sqlTransPay, Statement.RETURN_GENERATED_KEYS);
-            psTx.setDouble(1, transaction.getTotalharga());
-            psTx.setString(2, "selesai");
-            psTx.executeUpdate();
-
-            // Ambil ID nota transaksi baru dibuat
-            ResultSet rsKey = psTx.getGeneratedKeys();
-            int idTx = -1;
-            if (rsKey.next()) {
-                idTx = rsKey.getInt(1);
+        for (TransactionDetail item : transaction.getDetails()) {
+            boolean detailBerhasil = detailRepo.saveDetail(idTx, item);
+            if (detailBerhasil) {
+                stokController.kurangiStok(item.getIdProduct(), item.getJumlah());
             }
-            for (TransactionDetail item : transaction.getDetails()) {
-                // 1. Simpan ke transaction_detail
-                PreparedStatement psDetail = conn.prepareStatement(sqlTransDetail);
-                psDetail.setInt(1, idTx);
-                psDetail.setInt(2, item.getIdProduct());
-                psDetail.setInt(3, item.getJumlah());
-                psDetail.setDouble(4, item.getSubtotal());
-                psDetail.executeUpdate();
-
-                // 2. Potong stok langsung di MySQL
-                PreparedStatement psStok = conn.prepareStatement(sqlUpdateStok);
-                psStok.setInt(1, item.getJumlah());
-                psStok.setInt(2, item.getJumlah());
-                psStok.setInt(3, item.getIdProduct());
-                psStok.executeUpdate();
-            }
-            return true;
-
-        } catch (SQLException e) {
-            System.out.println("Error simpan transaksi: " + e.getMessage());
-            return false;
-        } finally {
-            db.disconnect();
         }
+        return true;
     }
 }

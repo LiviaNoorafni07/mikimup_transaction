@@ -13,6 +13,7 @@ public class TransactionDetail {
     private int idTransaction;
     private int idDetail;
     private int idProduct;
+    private String namaProduct;
     private int jumlah;
     private double subtotal;
 
@@ -30,6 +31,15 @@ public class TransactionDetail {
         this.idDetail = idDetail;
         this.idTransaction = idTransaction;
         this.idProduct = idProduct;
+        this.jumlah = jumlah;
+        this.subtotal = subtotal;
+    }
+
+    public TransactionDetail(int idDetail, int idTransaction, int idProduct, String namaProduct, int jumlah, double subtotal) {
+        this.idDetail = idDetail;
+        this.idTransaction = idTransaction;
+        this.idProduct = idProduct;
+        this.namaProduct = namaProduct;
         this.jumlah = jumlah;
         this.subtotal = subtotal;
     }
@@ -55,6 +65,10 @@ public class TransactionDetail {
         return jumlah;
     }
 
+    public String getNamaProduct() {
+        return namaProduct;
+    }
+
     public void setIdDetail(int idDetail) {
         this.idDetail = idDetail;
     }
@@ -73,5 +87,9 @@ public class TransactionDetail {
 
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public void setNamaProduct(String namaProduct) {
+        this.namaProduct = namaProduct;
     }
 }
