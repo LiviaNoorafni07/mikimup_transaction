@@ -6,6 +6,7 @@ package mikimup.controller;
 
 import mikimup.model.Transaction;
 import mikimup.model.TransactionDetail;
+import mikimup.model.PaymentStrategy;
 import mikimup.repository.TransactionRepository;
 import mikimup.repository.TransactionDetailRepository;
 import mikimup.repository.TransactionRepositoryImpl;
@@ -62,5 +63,29 @@ public class TransaksiController {
             }
         }
         return true;
+    }
+
+    public String prosesTransaksi(Transaction transaction, double jumlahBayar, PaymentStrategy strategy) {
+        if (transaction.getDetails() == null || transaction.getDetails().isEmpty()) {
+            return "Keranjang belanjaan masih kosong!";
+        }
+
+        if (!strategy.proses(transaction.getTotalharga(), jumlahBayar)) {
+            return strategy.getPesan();
+        }
+
+        int idTx = transactionRepo.saveMaster(transaction);
+        if (idTx == -1) {
+            return "Gagal menyimpan header transaksi ke database!";
+        }
+
+        for (TransactionDetail item : transaction.getDetails()) {
+            boolean detailBerhasil = detailRepo.saveDetail(idTx, item);
+            if (detailBerhasil) {
+                stokController.kurangiStok(item.getIdProduct(), item.getJumlah());
+            }
+        }
+
+        return "SUCCESS:" + strategy.getPesan();
     }
 }

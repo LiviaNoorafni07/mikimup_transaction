@@ -109,9 +109,6 @@ public class KelolaProduct extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TblProduct = new javax.swing.JTable();
         lblKelolaProduk = new javax.swing.JLabel();
-        tmbBuatProduk = new javax.swing.JButton();
-        tmbEditProduk = new javax.swing.JButton();
-        tmbHapusProduk = new javax.swing.JButton();
         tmbKembaliMenu = new javax.swing.JButton();
         tmbIsiStok = new javax.swing.JButton();
         IsiStok = new javax.swing.JTextField();
@@ -320,6 +317,11 @@ public class KelolaProduct extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        TblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TblProductMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TblProduct);
 
         lblKelolaProduk.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
@@ -328,18 +330,11 @@ public class KelolaProduct extends javax.swing.JFrame {
         lblKelolaProduk.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblKelolaProduk.setName(""); // NOI18N
 
-        tmbBuatProduk.setText("Buat Produk");
-        tmbBuatProduk.addActionListener(this::tmbBuatProdukActionPerformed);
-
-        tmbEditProduk.setText("Edit Product");
-        tmbEditProduk.addActionListener(this::tmbEditProdukActionPerformed);
-
-        tmbHapusProduk.setText("Hapus Product");
-
         tmbKembaliMenu.setText("Kembali");
         tmbKembaliMenu.addActionListener(this::tmbKembaliMenuActionPerformed);
 
         tmbIsiStok.setText("Masukkan Stok Product");
+        tmbIsiStok.addActionListener(this::tmbIsiStokActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -349,14 +344,11 @@ public class KelolaProduct extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblKelolaProduk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tmbBuatProduk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tmbEditProduk, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
-                    .addComponent(tmbHapusProduk, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(tmbKembaliMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(IsiStok)
+                        .addComponent(IsiStok, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tmbIsiStok, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -371,15 +363,9 @@ public class KelolaProduct extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblKelolaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tmbBuatProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tmbEditProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tmbHapusProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tmbIsiStok, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                            .addComponent(IsiStok))
+                            .addComponent(tmbIsiStok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(IsiStok, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(tmbKembaliMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE))
@@ -389,16 +375,6 @@ public class KelolaProduct extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tmbBuatProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbBuatProdukActionPerformed
-        txtTambah.setText("");
-        txtHarga.setText("");
-        txtStok.setText("");
-
-        PTambahProduk.pack();
-        PTambahProduk.setLocationRelativeTo(this);
-        PTambahProduk.setVisible(true);
-    }//GEN-LAST:event_tmbBuatProdukActionPerformed
-
     private void tmbKembaliMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbKembaliMenuActionPerformed
         MenuMikimup halUtama = new MenuMikimup();
         halUtama.setLocationRelativeTo(null);
@@ -406,15 +382,48 @@ public class KelolaProduct extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_tmbKembaliMenuActionPerformed
 
-    private void tmbEditProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbEditProdukActionPerformed
-        txtEditNama.setText("");
-        txtEditHarga.setText("");
-        txtEditStok.setText("");
+    private void TblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblProductMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TblProductMouseClicked
 
-        PEditProduk.pack();
-        PEditProduk.setLocationRelativeTo(this);
-        PEditProduk.setVisible(true);
-    }//GEN-LAST:event_tmbEditProdukActionPerformed
+    private void tmbIsiStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbIsiStokActionPerformed
+        int selectedRow = TblProduct.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih produk dari tabel terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String inputStok = IsiStok.getText().trim();
+
+        if (inputStok.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Masukkan jumlah stok yang ingin ditambahkan!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int jumlahTambah = Integer.parseInt(inputStok);
+            if (jumlahTambah <= 0) {
+                JOptionPane.showMessageDialog(this, "Jumlah stok harus lebih dari 0!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int idProduct = Integer.parseInt(TblProduct.getValueAt(selectedRow, 0).toString());
+
+            boolean berhasil = Scontroller.tambahStok(idProduct, jumlahTambah);
+
+            if (berhasil) {
+                JOptionPane.showMessageDialog(this, "Stok berhasil ditambahkan!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                IsiStok.setText("");
+                loadDataTableProduct();
+            } else {
+                JOptionPane.showMessageDialog(this, "Gagal memperbarui stok produk!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Jumlah stok harus berupa angka integer!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_tmbIsiStokActionPerformed
 
     /**
      * @param args the command line arguments
@@ -463,11 +472,8 @@ public class KelolaProduct extends javax.swing.JFrame {
     private javax.swing.JLabel lblkategori;
     private javax.swing.JLabel lblnama;
     private javax.swing.JLabel lblstok;
-    private javax.swing.JButton tmbBuatProduk;
     private javax.swing.JButton tmbClear1;
     private javax.swing.JButton tmbClear2;
-    private javax.swing.JButton tmbEditProduk;
-    private javax.swing.JButton tmbHapusProduk;
     private javax.swing.JButton tmbIsiStok;
     private javax.swing.JButton tmbKembaliKP2;
     private javax.swing.JButton tmbKembaliMenu;

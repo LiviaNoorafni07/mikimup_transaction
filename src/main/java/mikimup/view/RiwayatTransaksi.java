@@ -31,7 +31,6 @@ public class RiwayatTransaksi extends javax.swing.JFrame {
         transController = new TransaksiController();
         initTableModels();
         loadDataTransaksi();
-        setupEvents();
     }
 
     private void initTableModels() {
@@ -73,27 +72,6 @@ public class RiwayatTransaksi extends javax.swing.JFrame {
             };
             modelDetail.addRow(baris);
         }
-    }
-
-    private void setupEvents() {
-        // Event Klik Baris Tabel Transaksi Kiri
-        tblTransaksi.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int selectedRow = tblTransaksi.getSelectedRow();
-                if (selectedRow >= 0) {
-                    int idTransaction = Integer.parseInt(tblTransaksi.getValueAt(selectedRow, 0).toString());
-                    loadDataDetail(idTransaction);
-                }
-            }
-        });
-
-        // Event Tombol Kembali
-        tmbKembaliP.addActionListener(e -> {
-            MenuMikimup menu = new MenuMikimup();
-            menu.setLocationRelativeTo(null);
-            menu.setVisible(true);
-            this.dispose();
-        });
     }
 
     /**

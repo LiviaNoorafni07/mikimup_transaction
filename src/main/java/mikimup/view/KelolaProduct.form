@@ -370,15 +370,12 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lblKelolaProduk" max="32767" attributes="0"/>
-                  <Component id="tmbBuatProduk" alignment="0" max="32767" attributes="0"/>
-                  <Component id="tmbEditProduk" alignment="0" pref="388" max="32767" attributes="0"/>
-                  <Component id="tmbHapusProduk" alignment="1" pref="388" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="tmbKembaliMenu" min="-2" pref="212" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="IsiStok" max="32767" attributes="0"/>
+                      <Component id="IsiStok" pref="219" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="tmbIsiStok" min="-2" pref="163" max="-2" attributes="0"/>
                   </Group>
@@ -397,15 +394,9 @@
                   <Group type="102" attributes="0">
                       <Component id="lblKelolaProduk" min="-2" pref="99" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tmbBuatProduk" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="tmbEditProduk" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="tmbHapusProduk" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="tmbIsiStok" pref="36" max="32767" attributes="0"/>
-                          <Component id="IsiStok" max="32767" attributes="0"/>
+                          <Component id="tmbIsiStok" max="32767" attributes="0"/>
+                          <Component id="IsiStok" min="-2" pref="36" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="tmbKembaliMenu" min="-2" pref="36" max="-2" attributes="0"/>
@@ -436,6 +427,9 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TblProductMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -450,27 +444,6 @@
         <Property name="name" type="java.lang.String" value="" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="tmbBuatProduk">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Buat Produk"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tmbBuatProdukActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="tmbEditProduk">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Edit Product"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tmbEditProdukActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="tmbHapusProduk">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Hapus Product"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="tmbKembaliMenu">
       <Properties>
         <Property name="text" type="java.lang.String" value="Kembali"/>
@@ -483,6 +456,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Masukkan Stok Product"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tmbIsiStokActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="IsiStok">
     </Component>

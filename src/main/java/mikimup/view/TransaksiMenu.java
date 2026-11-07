@@ -7,6 +7,9 @@ package mikimup.view;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import mikimup.model.PaymentStrategy;
+import mikimup.model.QrisPayment;
+import mikimup.model.CashPayment;
 import mikimup.controller.ProductController;
 import mikimup.controller.TransaksiController;
 import mikimup.model.Product;
@@ -116,17 +119,26 @@ public class TransaksiMenu extends javax.swing.JFrame {
 
     private void editKeranjang() {
         int row = tblTransaksiSementara.getSelectedRow();
-        if (row == -1) {
+        if (row == -1 || txtId.getText().isEmpty() || txtJumlah.getText().trim().isEmpty()) {
             return;
         }
         try {
+            int idProduct = Integer.parseInt(txtId.getText());
+            String nama = cbNamaProduk.getSelectedItem().toString();
+            double harga = Double.parseDouble(txtHarga.getText());
             int jumlahBaru = Integer.parseInt(txtJumlah.getText().trim());
-            double harga = Double.parseDouble(modelSementara.getValueAt(row, 2).toString());
+            if (jumlahBaru <= 0) {
+                return;
+            }
+            modelSementara.setValueAt(idProduct, row, 0);
+            modelSementara.setValueAt(nama, row, 1);
+            modelSementara.setValueAt(harga, row, 2);
             modelSementara.setValueAt(jumlahBaru, row, 3);
             modelSementara.setValueAt(harga * jumlahBaru, row, 4);
             txtJumlah.setText("");
             hitungTotalSemuaHarga();
-        } catch (Exception e) {
+
+        } catch (NumberFormatException e) {
         }
     }
 
@@ -167,36 +179,80 @@ public class TransaksiMenu extends javax.swing.JFrame {
         }
     }
 
-// E. Proses Simpan Transaksi Ke Database
     private void prosesTransaksiAkhir() {
         if (modelSementara.getRowCount() == 0) {
-            return;
-        }
-        double total = Double.parseDouble(txtTotalHarga.getText());
-        double bayar = Double.parseDouble(txtHarga1.getText().trim());
-
-        if (bayar < total) {
+            JOptionPane.showMessageDialog(this, "Keranjang belanjaan masih kosong!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        Transaction t = new Transaction();
-        t.setTotalharga(total);
-        t.setStatus("selesai");
+        String[] options = {"Tunai", "QRIS"};
+        int pilihan = JOptionPane.showOptionDialog(this,
+                "Pilih Metode Pembayaran:",
+                "Metode Pembayaran",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, options, options[0]);
 
-        for (int i = 0; i < modelSementara.getRowCount(); i++) {
-            int idProduct = Integer.parseInt(modelSementara.getValueAt(i, 0).toString());
-            int jumlah = Integer.parseInt(modelSementara.getValueAt(i, 3).toString());
-            double subtotal = Double.parseDouble(modelSementara.getValueAt(i, 4).toString());
-            t.addDetail(new TransactionDetail(idProduct, jumlah, subtotal));
+        if (pilihan == -1) {
+            return;
         }
 
-        if (transaksiController.simpanTransaksi(t)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Transaksi Berhasil!");
-            modelSementara.setRowCount(0);
-            txtJumlah.setText("");
-            txtTotalHarga.setText("");
-            txtHarga1.setText("");
-            txtKembalian.setText("");
+        PaymentStrategy strategy;
+        double jumlahBayar = 0;
+
+        if (pilihan == 0) { // Tunai
+            String inputBayar = txtHarga1.getText().trim();
+            if (inputBayar.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Masukkan nominal pembayaran tunai terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            try {
+                jumlahBayar = Double.parseDouble(inputBayar);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Nominal pembayaran harus berupa angka valid!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            strategy = new CashPayment();
+        } else { // QRIS
+            jumlahBayar = Double.parseDouble(txtTotalHarga.getText());
+            strategy = new QrisPayment();
+        }
+
+        try {
+            double total = Double.parseDouble(txtTotalHarga.getText());
+
+            Transaction t = new Transaction();
+            t.setTotalharga(total);
+            t.setStatus("selesai");
+
+            for (int i = 0; i < modelSementara.getRowCount(); i++) {
+                int idProduct = Integer.parseInt(modelSementara.getValueAt(i, 0).toString());
+                int jumlah = Integer.parseInt(modelSementara.getValueAt(i, 3).toString());
+                double subtotal = Double.parseDouble(modelSementara.getValueAt(i, 4).toString());
+                t.addDetail(new TransactionDetail(idProduct, jumlah, subtotal));
+            }
+
+            String hasil = transaksiController.prosesTransaksi(t, jumlahBayar, strategy);
+
+            if (hasil.startsWith("SUCCESS:")) {
+                String pesanRespon = hasil.substring(8);
+
+                JOptionPane.showMessageDialog(this,
+                        "Transaksi Berhasil!\n" + pesanRespon,
+                        "Sukses",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                modelSementara.setRowCount(0);
+                txtJumlah.setText("");
+                txtTotalHarga.setText("");
+                txtHarga1.setText("");
+                txtKembalian.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, hasil, "Gagal Transaksi", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan proses transaksi!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

@@ -111,4 +111,39 @@ public class StokController {
         db.disconnect();
         return false;
     }
+
+    public boolean tambahStok(int idProduct, int jumlahTambah) {
+        Stok s = getStokByProductId(idProduct);
+        if (s == null) {
+            return false;
+        }
+
+        int stokBaru = s.getJumlah() + jumlahTambah;
+        String statusBaru = "tersedia";
+        if (stokBaru <= 0) {
+            statusBaru = "habis";
+        } else if (stokBaru <= s.getMinimum()) {
+            statusBaru = "menipis";
+        }
+
+        db.connect();
+        Connection conn = db.getConnection();
+        if (conn != null) {
+            try {
+                String sql = "UPDATE stok SET jumlah = ?, status = ? WHERE id_product = ?";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setInt(1, stokBaru);
+                ps.setString(2, statusBaru);
+                ps.setInt(3, idProduct);
+                ps.executeUpdate();
+                return true;
+            } catch (SQLException e) {
+                System.out.println("Error tambahStok: " + e.getMessage());
+            } finally {
+                db.disconnect();
+            }
+        }
+        db.disconnect();
+        return false;
+    }
 }
